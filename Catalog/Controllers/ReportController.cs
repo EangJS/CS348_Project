@@ -23,17 +23,24 @@ public class ReportController : ControllerBase
 
     // GET: /<controller>/
     [HttpGet]
-    public IEnumerable<Session> GetSessions()
+    public IEnumerable<Session> GetSessions(int? limit)
     {
-        List<Session> sessions = _context.SessionList.FromSqlRaw("SELECT * FROM Sessions LIMIT {0}", 5).ToList();
+        List<Session> sessions = _context.Sessions.FromSqlRaw("SELECT * FROM Sessions LIMIT {0}", limit ?? 10).ToList();
         return sessions;
     }
 
-    [HttpGet("moresessions")]
-    public IEnumerable<Session> GetMoreSessions()
+    [HttpPost]
+    public IActionResult UpdateSession(string courseName, string section, string type,
+            string dayOfWeek, string publishedStart, string publishedEnd,
+            string location, string email)
     {
-        List<Session> sessions = _context.SessionList.FromSqlRaw("SELECT * FROM Sessions LIMIT {0}", 10).ToList();
-        return sessions;
+        Session session = new Session(courseName, section, type,
+            dayOfWeek, publishedStart, publishedEnd,
+            location, email);
+        _context.Sessions.Add(session);
+        _context.SaveChanges();
+
+        return Ok();
     }
 }
 
