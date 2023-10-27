@@ -7,6 +7,6 @@ public class CatalogDbContext : DbContext
     {
     }
 
-    public DbSet<Courses> CourseList { get; set; }
-    public DbSet<Session> SessionList { get; set; }
+    public DbSet<Courses> Courses { get; set; }
+    public DbSet<Session> Sessions { get; set; }
 }
