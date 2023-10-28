@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DisplayBox from './DisplayBox';
 async function getSessions() {
     try {
-        const response = await fetch('https://localhost:7126/Report/moresessions');
+        const response = await fetch('https://localhost:7126/Report');
         if (!response.ok) {
             throw new Error(`Failed to fetch data. Status: ${response.status}`);
         }

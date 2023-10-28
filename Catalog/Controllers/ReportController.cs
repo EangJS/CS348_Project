@@ -29,6 +29,7 @@ public class ReportController : ControllerBase
         return sessions;
     }
 
+    /**
     [HttpPost]
     public IActionResult UpdateSession(string courseName, string section, string type,
             string dayOfWeek, string publishedStart, string publishedEnd,
@@ -40,6 +41,14 @@ public class ReportController : ControllerBase
         _context.Sessions.Add(session);
         _context.SaveChanges();
 
+        return Ok();
+    }
+    **/
+    [HttpPost]
+    public IActionResult UpdateSession([FromBody] Session session)
+    {
+        _context.Sessions.Add(session);
+        _context.SaveChanges();
         return Ok();
     }
 }
