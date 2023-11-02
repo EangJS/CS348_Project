@@ -97,11 +97,11 @@
               "type": "Microsoft.ApiManagement/service/apis",
               "name": "CatalogAPICS348/Catalog",
               "properties": {
-                "displayName": "Catalog",
+                "displayName": "Catalog, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "apiRevision": "1",
                 "description": null,
                 "subscriptionRequired": true,
-                "serviceUrl": null,
+                "serviceUrl": "https://catalogcs348.azurewebsites.net",
                 "path": "",
                 "protocols": [
                   "https"
