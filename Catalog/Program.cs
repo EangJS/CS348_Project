@@ -16,9 +16,12 @@ builder.Services.AddCors(options =>
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Configuration
+if (builder.Environment.IsDevelopment()){
+    builder.Configuration
     .SetBasePath(Environment.CurrentDirectory)
     .AddJsonFile("appsettings.json");
+}
+
 
 builder.Services.AddDbContext<CatalogDbContext>(options =>
 {
