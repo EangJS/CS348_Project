@@ -2,7 +2,15 @@ import React, { useState, useEffect } from 'react';
 import DisplayBox from './DisplayBox';
 async function getSessions() {
     try {
-        const response = await fetch('https://localhost:7126/Report');
+
+        var myHeaders = new Headers();
+        myHeaders.append("Ocp-Apim-Subscription-Key", process.env.REACT_APP_SUBSCRIPTION_KEY);
+
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+        };
+        const response = await fetch(process.env.REACT_APP_API_URL + '/Report', requestOptions);
         if (!response.ok) {
             throw new Error(`Failed to fetch data. Status: ${response.status}`);
         }

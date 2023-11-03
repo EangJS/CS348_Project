@@ -1,9 +1,9 @@
 import './App.css';
 import './material-css/theme.css';
-import Manage from './Manage';
+import Manage from './editor/Manage';
 import React from 'react';
 import { BrowserRouter, Routes, Route, } from "react-router-dom";
-import Home from './Home';
+import Home from './report/Home';
 function App() {
   return (
     <BrowserRouter>

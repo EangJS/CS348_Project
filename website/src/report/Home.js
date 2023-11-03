@@ -1,6 +1,6 @@
-import './App.css';
+import '../App.css';
 import Session from './Session';
-import './material-css/theme.css';
+import '../material-css/theme.css';
 function App() {
   return (
     <header className="App-theme">

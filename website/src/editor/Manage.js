@@ -1,7 +1,7 @@
-import './App.css';
-import './material-css/theme.css';
+import '../App.css';
+import '../material-css/theme.css';
 import React, { useState } from 'react';
-import Field from './Field';
+import Field from '../forms/Field';
 function Manage() {
   const [formData, setFormData] = useState({
     courseName: '',
@@ -16,7 +16,6 @@ function Manage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log("abc");
     setFormData({
       ...formData,
       [name]: value,
@@ -25,11 +24,11 @@ function Manage() {
 
   const submit = (e) => {
     e.preventDefault();
-    // Make the POST request using the fetch API
-    fetch('https://localhost:7126/Report', {
+    fetch(process.env.REACT_APP_API_URL + '/Report', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Ocp-Apim-Subscription-Key': process.env.REACT_APP_SUBSCRIPTION_KEY,
       },
       body: JSON.stringify(formData),
     })
