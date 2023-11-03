@@ -7,26 +7,29 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: myCors,
-                      policy =>
-                      {
-                          policy.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
-                      });
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+        });
 });
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Configuration
+if (builder.Environment.IsDevelopment()){
+    builder.Configuration
     .SetBasePath(Environment.CurrentDirectory)
     .AddJsonFile("appsettings.json");
+}
+
 
 builder.Services.AddDbContext<CatalogDbContext>(options =>
 {
-    options.UseMySql(builder.Configuration.GetConnectionString("Default"),
-        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("Default")));
+    options.UseMySql(builder.Configuration.GetConnectionString("CatalogString"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("CatalogString")));
 });
 
-using MySqlConnection connection = new MySqlConnection(builder.Configuration.GetConnectionString("Default"));
+using MySqlConnection connection = new MySqlConnection(builder.Configuration.GetConnectionString("CatalogString"));
 connection.Open();
 builder.Services.AddSingleton(connection);
 

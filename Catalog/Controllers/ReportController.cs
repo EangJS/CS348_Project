@@ -8,7 +8,7 @@ using MySqlConnector;
 namespace Catalog.Controllers;
 
 [ApiController]
-[Route("/")]
+[Route("[controller]")]
 public class ReportController : ControllerBase
 {
 
