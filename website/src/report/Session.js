@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DisplayBox from './DisplayBox';
 
 
-function Session({formData,reloadOutput}) {
+function Session({ formData, reloadOutput }) {
     useEffect(() => {
         // Check if reloadOutput changed, and take appropriate action
         if (reloadOutput) {
@@ -15,9 +15,9 @@ function Session({formData,reloadOutput}) {
             // setReloadOutput(false);
         }
     }, [reloadOutput]);
-    if(!formData[0]) {
+    if (!formData[0]) {
         return (
-            <h1>Make a request!</h1>
+            <h1>No matches found!</h1>
         );
     }
 

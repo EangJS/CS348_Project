@@ -1,16 +1,21 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Field from "../forms/Field";
+import Location from "../forms/Location";
+import Types from "../forms/Types";
 
-async function getSessions(courseCode) {
+async function getSessions(courseCode, type, location, credits) {
     try {
         var url = new URL(process.env.REACT_APP_API_URL + '/Report/Session');
         const courseCodeSplit = courseCode.split(' ');
-        if(courseCodeSplit.length === 1){
+        if (courseCodeSplit.length === 1) {
             url.searchParams.append('courseSubject', courseCodeSplit[0]);
-        } else if(courseCodeSplit.length > 1){
+        } else if (courseCodeSplit.length > 1) {
             url.searchParams.append('courseSubject', courseCodeSplit[0]);
             url.searchParams.append('courseNumber', courseCodeSplit[1]);
         }
+        url.searchParams.append('type', type);
+        url.searchParams.append('location', location);
+        url.searchParams.append('creditValue', credits);
 
         var myHeaders = new Headers();
         myHeaders.append("Ocp-Apim-Subscription-Key", process.env.REACT_APP_SUBSCRIPTION_KEY);
@@ -31,16 +36,19 @@ async function getSessions(courseCode) {
 }
 
 
-function Filter({onFormSubmit}) {
+function Filter({ onFormSubmit }) {
     const [formState, setFormState] = useState({
-        courseCode: ''
+        courseCode: '',
+        type: '',
+        location: '',
+        credits: ''
     });
 
     useEffect(() => {
         // This will simulate an initial form submission when the component mounts
         const simulateInitialSubmit = async () => {
             try {
-                const data = await getSessions(formState.courseCode);
+                const data = await getSessions(formState.courseCode, formState.type, formState.location, formState.credits);
                 onFormSubmit(data);
             } catch (error) {
                 // Handle errors
@@ -55,7 +63,7 @@ function Filter({onFormSubmit}) {
         e.preventDefault();
 
         try {
-            const data = await getSessions(formState.courseCode);
+            const data = await getSessions(formState.courseCode, formState.type, formState.location, formState.credits);
             onFormSubmit(data);
             // Handle the fetched data as needed
         } catch (error) {
@@ -68,20 +76,31 @@ function Filter({onFormSubmit}) {
         const { name, value } = e.target;
         setFormState({
             ...formState,
-            [name]: value,
+            [name]: value
+        });
+    };
+    const handleTypesChange = (selectedTypes) => {
+        setFormState({
+            ...formState,
+            'type': selectedTypes,
         });
     };
 
     return (
-        <>
-            <h2>Filter Courses</h2>
+        <div className="flex items-center justify-center flex-col">
+            <div className="w-full px-3 mb-6 md:mb-0">
+                <h4>Filter Courses</h4>
+            </div>
             <form onSubmit={handleSubmit}>
                 <Field name={"courseCode"} labelName={"Course Name"} handlechange={handleChange} />
+                <Types name={"type"} labelName={"Type"} handlechange={handleTypesChange} />
+                <Location name={"location"} labelName={"Location"} handlechange={handleChange} />
+                <Field name={"credits"} labelName={"Credits"} handlechange={handleChange} />
                 <button className="bg-[var(--md-sys-color-primary-container-dark)] hover:bg-[var(--md-sys-color-surface-dark)] text-[var(--md-sys-color-on-primary-container-dark)] font-bold py-2 px-4 rounded-full" type="submit">
                     Submit
                 </button>
             </form>
-        </>
+        </div>
     );
 }
 
