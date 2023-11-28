@@ -36,6 +36,19 @@ public class ReportController : ControllerBase
         return Ok(sessions);
     }
 
+    [HttpGet("Faculty")]
+    public IEnumerable<Faculty> GetFacultyByEmail(string? email)
+    {
+        string query = @"
+        SELECT *
+        FROM faculty
+        WHERE
+        email = COALESCE({0},email);
+        ";
+        List<Faculty> faculties = _context.Faculties.FromSqlRaw(query, email).ToList();
+        return faculties;
+    }
+
     [HttpGet("Session")]
     public IEnumerable<Session> Sessions(string? courseSubject,string? courseNumber,string? type,string? location,int? creditValue)
     {
@@ -49,8 +62,8 @@ public class ReportController : ControllerBase
         WHERE 
         CourseSubjectAbbreviation = COALESCE({0},CourseSubjectAbbreviation) 
         AND CourseNumber = COALESCE({1},CourseNumber)
-        AND Type=COALESCE({2},Type)
-        AND locations.LocationId = COALESCE({3},locations.LocationId)
+        AND (Type IN ({2} OR {2} IS NULL)
+        AND (locations.LocationId IN ({3}) OR {3} IS NULL)
         AND CourseCreditMinimumValue >= {4};";
         List<Session> sessions = _context.Sessions.FromSqlRaw(query,courseSubject,courseNumber, type, location,creditValue ?? 0).ToList();
         return sessions;

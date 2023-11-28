@@ -1,27 +1,31 @@
 ﻿<Properties StartupConfiguration="{2D0825BF-69E1-4DCE-A1D9-13138DABA6B5}|https">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Catalog/Program.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Catalog PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Catalog/Controllers/ReportController.cs">
     <Files>
-      <File FileName="Catalog/Program.cs" Line="30" Column="1" />
-      <File FileName="Catalog/Controllers/ReportController.cs" />
-      <File FileName="Catalog/appsettings.json" Line="10" Column="121" />
+      <File FileName="Catalog/Controllers/ReportController.cs" Line="11" Column="24" />
+      <File FileName="Catalog/appsettings.json" />
+      <File FileName="Catalog/Models/Session.cs" />
+      <File FileName="Catalog/Program.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Catalog">
-            <Node name="Catalog">
-              <Node name="Program.cs" selected="True" />
+            <Node name="Catalog" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="ReportController.cs" selected="True" />
+              </Node>
+              <Node name="Models" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.Catalog PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>
