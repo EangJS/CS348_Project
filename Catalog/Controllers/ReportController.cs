@@ -36,6 +36,19 @@ public class ReportController : ControllerBase
         return Ok(sessions);
     }
 
+    [HttpGet("Faculty")]
+    public IEnumerable<Faculty> GetFacultyByEmail(string? email)
+    {
+        string query = @"
+        SELECT *
+        FROM faculty
+        WHERE
+        email = COALESCE({0},email);
+        ";
+        List<Faculty> faculties = _context.Faculties.FromSqlRaw(query, email).ToList();
+        return faculties;
+    }
+
     [HttpGet("Session")]
     public IEnumerable<Session> Sessions(string? courseSubject, string? courseNumber, string? type, string? location, int? creditValue)
     {
