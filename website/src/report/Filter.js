@@ -45,18 +45,16 @@ function Filter({ onFormSubmit }) {
     });
 
     useEffect(() => {
-        // This will simulate an initial form submission when the component mounts
         const simulateInitialSubmit = async () => {
             try {
-                const data = await getSessions(formState.courseCode, formState.type, formState.location, formState.credits);
+                const data = await getSessions('', '', '', '');
                 onFormSubmit(data);
             } catch (error) {
-                // Handle errors
                 console.error("Error fetching data:", error);
             }
         };
-
         simulateInitialSubmit();
+        // eslint-disable-next-line
     }, []);
 
     const handleSubmit = async (e) => {
@@ -87,11 +85,11 @@ function Filter({ onFormSubmit }) {
     };
 
     return (
-        <div className="flex items-center justify-center flex-col">
+        <div className="flex items-end justify-center flex-col">
             <div className="w-full px-3 mb-6 md:mb-0">
                 <h4>Filter Courses</h4>
             </div>
-            <form onSubmit={handleSubmit}>
+            <form className="w-full px-3 mb-6 md:mb-0" onSubmit={handleSubmit}>
                 <Field name={"courseCode"} labelName={"Course Name"} handlechange={handleChange} />
                 <Types name={"type"} labelName={"Type"} handlechange={handleTypesChange} />
                 <Location name={"location"} labelName={"Location"} handlechange={handleChange} />

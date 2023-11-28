@@ -11,6 +11,9 @@ function DisplayBox(props) {
                 <div className="text-lg">
                     {session.location}
                 </div>
+                <div className="text-sm">
+                    {session.publishedStart} - {session.publishedEnd}
+                </div>
 
             </div>
 

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-async function getLocations() {
+async function getFaculties() {
     try {
-        var url = new URL(process.env.REACT_APP_API_URL + '/Report/Location');
+        var url = new URL(process.env.REACT_APP_API_URL + '/Report/Faculty');
         var myHeaders = new Headers();
         myHeaders.append("Ocp-Apim-Subscription-Key", process.env.REACT_APP_SUBSCRIPTION_KEY);
 
@@ -21,19 +21,18 @@ async function getLocations() {
     }
 }
 
-function Location(props) {
-    const [locations, setLocations] = useState([]);
+function Faculty(props) {
+    const [faculty, setfaculties] = useState([]);
     const { name, labelName, handlechange } = props;
 
     useEffect(() => {
-        const fetchLocations = async () => {
-            const data = await getLocations();
-            setLocations(data); // Assuming the API response is an array of locations
+        const fetchFaculties = async () => {
+            const data = await getFaculties();
+            setfaculties(data); // Assuming the API response is an array of faculties
         };
 
-        fetchLocations();
+        fetchFaculties();
     }, []);
-
 
     return (
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -45,10 +44,10 @@ function Location(props) {
                 className="appearance-none block w-full text-[var(--md-sys-color-on-secondary-container)] bg-[var(--md-sys-color-secondary-container-dark)] border rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
                 onChange={handlechange}
             >
-                <option value="">Select a location</option>
-                {locations.map(location => (
-                    <option key={location.locationId} value={location.locationId}>
-                        {location.locationId}
+                <option value="">Select a faculty</option>
+                {faculty.map(faculty => (
+                    <option key={faculty.UPN} value={faculty.Email}>
+                        {faculty.Name}
                     </option>
                 ))}
             </select>
@@ -56,4 +55,4 @@ function Location(props) {
     );
 }
 
-export default Location;
+export default Faculty;

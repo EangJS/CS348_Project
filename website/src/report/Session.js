@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import DisplayBox from './DisplayBox';
 
 
@@ -17,7 +17,9 @@ function Session({ formData, reloadOutput }) {
     }, [reloadOutput]);
     if (!formData[0]) {
         return (
-            <h1>No matches found!</h1>
+            <div className='flex flex-col gap-3 w-full'>
+                No matches found!
+            </div>
         );
     }
 
