@@ -46,8 +46,8 @@ function Faculty(props) {
             >
                 <option value="">Select a faculty</option>
                 {faculty.map(faculty => (
-                    <option key={faculty.UPN} value={faculty.Email}>
-                        {faculty.Name}
+                    <option key={faculty.upn} value={faculty.email}>
+                        {faculty.name}
                     </option>
                 ))}
             </select>
