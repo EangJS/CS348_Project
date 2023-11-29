@@ -3,9 +3,13 @@ import Field from "../forms/Field";
 import Location from "../forms/Location";
 import Types from "../forms/Types";
 
-async function getSessions(courseCode, type, location, credits, startTime) {
+async function getSessions(courseCode, type, location, credits, startTime, formState) {
     try {
+        console.log(formState);
+
+
         var url = new URL(process.env.REACT_APP_API_URL + '/Report/Session');
+        /**
         const courseCodeSplit = courseCode.split(' ');
         if (courseCodeSplit.length === 1) {
             url.searchParams.append('courseSubject', courseCodeSplit[0]);
@@ -13,10 +17,24 @@ async function getSessions(courseCode, type, location, credits, startTime) {
             url.searchParams.append('courseSubject', courseCodeSplit[0]);
             url.searchParams.append('courseNumber', courseCodeSplit[1]);
         }
-        url.searchParams.append('type', type);
-        url.searchParams.append('location', location);
-        url.searchParams.append('creditValue', credits);
-        url.searchParams.append('startTime', startTime);
+        */
+        if (formState) {
+            Object.entries(formState).forEach(([key, value]) => {
+                if (key === 'courseCode') {
+                    const [courseSubject, courseNumber] = value.split(' ');
+                    if (courseNumber) {
+                        url.searchParams.append('courseSubject', courseSubject);
+                        url.searchParams.append('courseNumber', courseNumber);
+                    } else {
+                        url.searchParams.append('courseSubject', courseSubject);
+                    }
+                } else {
+                    url.searchParams.append(key, value);
+                }
+            });
+
+        }
+
 
         var myHeaders = new Headers();
         myHeaders.append("Ocp-Apim-Subscription-Key", process.env.REACT_APP_SUBSCRIPTION_KEY);
@@ -66,7 +84,7 @@ function Filter({ onFormSubmit }) {
         e.preventDefault();
 
         try {
-            const data = await getSessions(formState.courseCode, formState.type, formState.location, formState.credits, formState.startTime);
+            const data = await getSessions(formState.courseCode, formState.type, formState.location, formState.credits, formState.startTime, formState);
             console.log(formState.startTime);
             onFormSubmit(data);
             // Handle the fetched data as needed
