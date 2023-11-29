@@ -1,4 +1,5 @@
-﻿using Catalog.Models;
+﻿using System;
+using Catalog.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
@@ -50,7 +51,7 @@ public class ReportController : ControllerBase
     }
 
     [HttpGet("Session")]
-    public IEnumerable<Session> Sessions(string? courseSubject, string? courseNumber, string? type, string? location, int? creditValue)
+    public IEnumerable<Session> Sessions(string? courseSubject, string? courseNumber, string? type, string? location, int? creditValue,DateTime? startTime)
     {
         string query = @"
         SELECT *
@@ -64,8 +65,12 @@ public class ReportController : ControllerBase
         AND CourseNumber = COALESCE({1},CourseNumber)
         AND Type=COALESCE({2},Type)
         AND locations.LocationId = COALESCE({3},locations.LocationId)
-        AND CourseCreditMinimumValue >= {4};";
-        List<Session> sessions = _context.Sessions.FromSqlRaw(query, courseSubject, courseNumber, type, location, creditValue ?? 0).ToList();
+        AND CourseCreditMinimumValue >= {4}
+        AND STR_TO_DATE(UPPER(CONCAT(sessions.publishedStart, 'm')), '%l:%i%p') > (STR_TO_DATE({5}, '%l:%i%p'));";
+        DateTime defaultTime = DateTime.MinValue.Date;
+        
+        string formattedTime = (startTime ?? defaultTime).ToString("hh:mmtt");
+        List<Session> sessions = _context.Sessions.FromSqlRaw(query, courseSubject, courseNumber, type, location, creditValue ?? 0,formattedTime).ToList();
         return sessions;
 
     }

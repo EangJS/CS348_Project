@@ -3,7 +3,7 @@ import Field from "../forms/Field";
 import Location from "../forms/Location";
 import Types from "../forms/Types";
 
-async function getSessions(courseCode, type, location, credits) {
+async function getSessions(courseCode, type, location, credits, startTime) {
     try {
         var url = new URL(process.env.REACT_APP_API_URL + '/Report/Session');
         const courseCodeSplit = courseCode.split(' ');
@@ -16,6 +16,7 @@ async function getSessions(courseCode, type, location, credits) {
         url.searchParams.append('type', type);
         url.searchParams.append('location', location);
         url.searchParams.append('creditValue', credits);
+        url.searchParams.append('startTime', startTime);
 
         var myHeaders = new Headers();
         myHeaders.append("Ocp-Apim-Subscription-Key", process.env.REACT_APP_SUBSCRIPTION_KEY);
@@ -41,27 +42,32 @@ function Filter({ onFormSubmit }) {
         courseCode: '',
         type: '',
         location: '',
-        credits: ''
+        credits: '',
+        startTime: ''
     });
+    const [mounted, setMounted] = useState(false)
 
     useEffect(() => {
         const simulateInitialSubmit = async () => {
             try {
-                const data = await getSessions('', '', '', '');
+                const data = await getSessions('', '', '', '', '');
                 onFormSubmit(data);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         };
-        simulateInitialSubmit();
-        // eslint-disable-next-line
-    }, []);
+        if (!mounted) {
+            simulateInitialSubmit();
+            setMounted(true);
+        }
+    }, [mounted, onFormSubmit]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const data = await getSessions(formState.courseCode, formState.type, formState.location, formState.credits);
+            const data = await getSessions(formState.courseCode, formState.type, formState.location, formState.credits, formState.startTime);
+            console.log(formState.startTime);
             onFormSubmit(data);
             // Handle the fetched data as needed
         } catch (error) {
@@ -93,7 +99,8 @@ function Filter({ onFormSubmit }) {
                 <Field name={"courseCode"} labelName={"Course Name"} handlechange={handleChange} />
                 <Types name={"type"} labelName={"Type"} handlechange={handleTypesChange} />
                 <Location name={"location"} labelName={"Location"} handlechange={handleChange} />
-                <Field name={"credits"} labelName={"Credits"} handlechange={handleChange} />
+                <Field inputType={"number"} name={"credits"} labelName={"Credits"} handlechange={handleChange} />
+                <Field inputType={"time"} name={"startTime"} labelName={"Start Time"} handlechange={handleChange} />
                 <button className="bg-[var(--md-sys-color-primary-container-dark)] hover:bg-[var(--md-sys-color-surface-dark)] text-[var(--md-sys-color-on-primary-container-dark)] font-bold py-2 px-4 rounded-full" type="submit">
                     Submit
                 </button>
