@@ -5,19 +5,7 @@ import Types from "../forms/Types";
 
 async function getSessions(courseCode, type, location, credits, startTime, formState) {
     try {
-        console.log(formState);
-
-
         var url = new URL(process.env.REACT_APP_API_URL + '/Report/Session');
-        /**
-        const courseCodeSplit = courseCode.split(' ');
-        if (courseCodeSplit.length === 1) {
-            url.searchParams.append('courseSubject', courseCodeSplit[0]);
-        } else if (courseCodeSplit.length > 1) {
-            url.searchParams.append('courseSubject', courseCodeSplit[0]);
-            url.searchParams.append('courseNumber', courseCodeSplit[1]);
-        }
-        */
         if (formState) {
             Object.entries(formState).forEach(([key, value]) => {
                 if (key === 'courseCode') {
@@ -68,7 +56,7 @@ function Filter({ onFormSubmit }) {
     useEffect(() => {
         const simulateInitialSubmit = async () => {
             try {
-                const data = await getSessions('', '', '', '', '');
+                const data = await getSessions();
                 onFormSubmit(data);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -85,7 +73,6 @@ function Filter({ onFormSubmit }) {
 
         try {
             const data = await getSessions(formState.courseCode, formState.type, formState.location, formState.credits, formState.startTime, formState);
-            console.log(formState.startTime);
             onFormSubmit(data);
             // Handle the fetched data as needed
         } catch (error) {
