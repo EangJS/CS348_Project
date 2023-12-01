@@ -66,30 +66,39 @@ public class ReportController : ControllerBase
         AND Type=COALESCE({2},Type)
         AND locations.LocationId = COALESCE({3},locations.LocationId)
         AND CourseCreditMinimumValue >= {4}
-        AND STR_TO_DATE(UPPER(CONCAT(sessions.publishedStart, 'm')), '%l:%i%p') > (STR_TO_DATE({5}, '%l:%i%p'));";
+        AND STR_TO_DATE(UPPER(CONCAT(sessions.publishedStart, 'm')), '%l:%i%p') >= (STR_TO_DATE({5}, '%l:%i%p'));";
         DateTime defaultTime = DateTime.MinValue.Date;
         
         string formattedTime = (startTime ?? defaultTime).ToString("hh:mmtt");
-        List<Session> sessions = _context.Sessions.FromSqlRaw(query, courseSubject, courseNumber, type, location, creditValue ?? 0,formattedTime).ToList();
+        List<Session> sessions = _context.Sessions.FromSqlRaw(query, courseSubject,
+            courseNumber,
+            type,
+            location,
+            creditValue ?? 0,
+            formattedTime).ToList();
         return sessions;
 
     }
 
+    
+
     [HttpPost("Session")]
     public IActionResult InsertSession([FromBody] Session sessionInput)
     {
+        string convertedPublishedStart = Session.ConvertTimeFormat(sessionInput.PublishedStart ?? "00:00");
+        string convertedPublishedEnd = Session.ConvertTimeFormat(sessionInput.PublishedEnd ?? "00:00");
         try
         {
             // Call the stored procedure
             _context.Database.ExecuteSqlRaw("CALL InsertSession({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})",
                 sessionInput.CourseName,
                 sessionInput.Section,
-                sessionInput.Type,
-                sessionInput.DayOfWeek,
-                sessionInput.PublishedStart,
-                sessionInput.PublishedEnd,
-                sessionInput.Location,
-                sessionInput.Email);
+                sessionInput.Type ?? string.Empty,
+                sessionInput.DayOfWeek ?? string.Empty,
+                convertedPublishedStart,
+                convertedPublishedEnd,
+                sessionInput.Location ?? string.Empty,
+                sessionInput.Email ?? string.Empty);
 
             return Ok("Session inserted successfully");
         }

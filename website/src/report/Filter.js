@@ -3,7 +3,7 @@ import Field from "../forms/Field";
 import Location from "../forms/Location";
 import Types from "../forms/Types";
 
-async function getSessions(courseCode, type, location, credits, startTime, formState) {
+async function getSessions(formState) {
     try {
         var url = new URL(process.env.REACT_APP_API_URL + '/Report/Session');
         if (formState) {
@@ -72,7 +72,7 @@ function Filter({ onFormSubmit }) {
         e.preventDefault();
 
         try {
-            const data = await getSessions(formState.courseCode, formState.type, formState.location, formState.credits, formState.startTime, formState);
+            const data = await getSessions(formState);
             onFormSubmit(data);
             // Handle the fetched data as needed
         } catch (error) {
@@ -88,12 +88,6 @@ function Filter({ onFormSubmit }) {
             [name]: value
         });
     };
-    const handleTypesChange = (selectedTypes) => {
-        setFormState({
-            ...formState,
-            'type': selectedTypes,
-        });
-    };
 
     return (
         <div className="flex items-end justify-center flex-col">
@@ -102,7 +96,7 @@ function Filter({ onFormSubmit }) {
             </div>
             <form className="w-full px-3 mb-6 md:mb-0" onSubmit={handleSubmit}>
                 <Field name={"courseCode"} labelName={"Course Name"} handlechange={handleChange} />
-                <Types name={"type"} labelName={"Type"} handlechange={handleTypesChange} />
+                <Types name={"type"} labelName={"Type"} handlechange={handleChange} />
                 <Location name={"location"} labelName={"Location"} handlechange={handleChange} />
                 <Field inputType={"number"} name={"credits"} labelName={"Credits"} handlechange={handleChange} />
                 <Field inputType={"time"} name={"startTime"} labelName={"Start Time"} handlechange={handleChange} />

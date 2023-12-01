@@ -12,7 +12,7 @@ function DisplayBox(props) {
                     {session.location}
                 </div>
                 <div className="text-sm">
-                    {session.publishedStart} - {session.publishedEnd}
+                    {session.publishedStart} - {session.publishedEnd} • {session.dayOfWeek}
                 </div>
 
             </div>

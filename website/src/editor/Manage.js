@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Field from '../forms/Field';
 import Location from '../forms/Location';
 import Faculty from '../forms/Faculty';
+import Delete from './Delete';
 function Manage() {
   const [formData, setFormData] = useState({
     courseName: '',
@@ -26,7 +27,7 @@ function Manage() {
 
   const submit = (e) => {
     e.preventDefault();
-    fetch(process.env.REACT_APP_API_URL + '/Report', {
+    fetch(process.env.REACT_APP_API_URL + '/Report/Session', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -48,6 +49,7 @@ function Manage() {
   };
   return (
     <div className="App-theme">
+      <a href="/" className="m-3 bg-[var(--md-sys-color-tertiary-container-dark)] hover:bg-[var(--md-sys-color-secondary-container)] text-[var(--md-sys-color-on-primary-container-dark)] py-2 px-4 rounded-full">Home</a>
       <div className="flex items-center justify-center w-full p-5 m-5">
         <div className="max-w-full p-5 m-5 rounded-xl bg-[var(--md-sys-color-on-primary-dark)]">
           <form className="w-full max-w-lg" onSubmit={submit}>
@@ -56,8 +58,8 @@ function Manage() {
               <Field handlechange={handleChange} name={"section"} labelName={"Section"}></Field>
               <Field handlechange={handleChange} name={"type"} labelName={"Type"}></Field>
               <Field handlechange={handleChange} name={"dayOfWeek"} labelName={"Day of Week"}></Field>
-              <Field handlechange={handleChange} name={"publishedStart"} labelName={"Start Time"}></Field>
-              <Field handlechange={handleChange} name={"publishedEnd"} labelName={"End Time"}></Field>
+              <Field inputType={"time"} handlechange={handleChange} name={"publishedStart"} labelName={"Start Time"}></Field>
+              <Field inputType={"time"} handlechange={handleChange} name={"publishedEnd"} labelName={"End Time"}></Field>
               <Location name={"location"} labelName={"Location"} handlechange={handleChange} />
               <Faculty handlechange={handleChange} name={"email"} labelName={"Email"} />
               <button className="bg-[var(--md-sys-color-primary-container-dark)] hover:bg-[var(--md-sys-color-surface-dark)] text-[var(--md-sys-color-on-primary-container-dark)] font-bold py-2 px-4 rounded-full">
@@ -67,6 +69,7 @@ function Manage() {
           </form>
         </div>
       </div>
+      <Delete></Delete>
     </div>
 
   );
