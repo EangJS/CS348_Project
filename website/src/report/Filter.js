@@ -43,7 +43,7 @@ async function getSessions(formState) {
 }
 
 
-function Filter({ onFormSubmit }) {
+function Filter({ onFormSubmit, setLoader }) {
     const [formState, setFormState] = useState({
         courseCode: '',
         type: '',
@@ -70,6 +70,7 @@ function Filter({ onFormSubmit }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoader(true);
 
         try {
             const data = await getSessions(formState);
