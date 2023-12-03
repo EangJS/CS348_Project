@@ -35,7 +35,7 @@ function Faculty(props) {
     }, []);
 
     return (
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <div className="w-full">
             <label className="block uppercase tracking-wide text-[var(--md-sys-color-on-primary-container-dark)] text-xs font-bold mb-2">
                 {labelName}
             </label>

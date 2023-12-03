@@ -15,6 +15,7 @@ function Types(props) {
                                 name={name}
                                 value={type}
                                 onChange={handlechange}
+                                checked={type === props["defaultValue"]}
                             />
                             {type}
                         </label>

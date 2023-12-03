@@ -36,7 +36,7 @@ function Location(props) {
 
 
     return (
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <div className="w-full">
             <label className="block uppercase tracking-wide text-[var(--md-sys-color-on-primary-container-dark)] text-xs font-bold mb-2">
                 {labelName}
             </label>
@@ -44,7 +44,7 @@ function Location(props) {
                 name={name}
                 className="appearance-none block w-full text-[var(--md-sys-color-on-secondary-container)] bg-[var(--md-sys-color-secondary-container-dark)] border rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
                 onChange={handlechange}
-            >
+                value={props["defaultValue"]}            >
                 <option value="">Select a location</option>
                 {locations.map(location => (
                     <option key={location.locationId} value={location.locationId}>

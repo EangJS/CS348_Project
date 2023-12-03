@@ -1,9 +1,12 @@
 ﻿<Properties StartupConfiguration="{2D0825BF-69E1-4DCE-A1D9-13138DABA6B5}|https">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.Catalog PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Catalog/Controllers/ReportController.cs">
     <Files>
-      <File FileName="Catalog/Controllers/ReportController.cs" Line="66" Column="18" />
+      <File FileName="Catalog/Controllers/ReportController.cs" Line="93" Column="65" />
       <File FileName="Catalog/appsettings.json" />
       <File FileName="Catalog/Models/Session.cs" />
       <File FileName="Catalog/Program.cs" />
@@ -13,7 +16,7 @@
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Catalog">
-            <Node name="Catalog">
+            <Node name="Catalog" expanded="True">
               <Node name="Controllers" expanded="True">
                 <Node name="ReportController.cs" selected="True" />
               </Node>
@@ -21,18 +24,8 @@
           </Node>
         </State>
       </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State>
-          <Value>startTime</Value>
-          <Value>formattedTime</Value>
-          <Value>sessions</Value>
-        </State>
-      </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.Catalog PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
 </Properties>

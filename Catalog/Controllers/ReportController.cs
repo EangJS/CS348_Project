@@ -80,6 +80,16 @@ public class ReportController : ControllerBase
 
     }
 
+    [HttpGet("Section")]
+    public IEnumerable<Session> Sessions(string? section)
+    {
+        string query = @"
+        SELECT * FROM sessions WHERE Section = COALESCE({0},Section);";
+        List<Session> sessions = _context.Sessions.FromSqlRaw(query, section).ToList();
+        return sessions;
+
+    }
+
     
 
     [HttpPost("Session")]

@@ -38,6 +38,7 @@ function Manage() {
       .then((response) => {
         if (response.status === 200) {
           alert("Success");
+          window.location.reload();
         } else {
           alert(response.statusText);
         }
