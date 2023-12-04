@@ -191,7 +191,7 @@ public class ReportController : ControllerBase
     /// </summary>
     /// <param name="id">Section - Primary key to delete</param>
     /// <returns>HTTP 204 when successful</returns>
-    [HttpDelete("DeleteSession")]
+    [HttpPost("DeleteSession")]
     public IActionResult DeleteSession(string id)
     {
         var session = _context.Sessions.Find(id);
@@ -204,7 +204,7 @@ public class ReportController : ControllerBase
         _context.Sessions.Remove(session);
         _context.SaveChanges();
 
-        return NoContent(); // Return 204 No Content if the session is successfully deleted
+        return Ok(); // Return 204 No Content if the session is successfully deleted
     }    
 
 }

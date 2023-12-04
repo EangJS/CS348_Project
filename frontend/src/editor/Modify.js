@@ -157,24 +157,24 @@ function Modify() {
      */
     const submitDelete = async (e) => {
         e.preventDefault();
-        await fetch(process.env.REACT_APP_API_URL + `/Report/DeleteSession`, {
-            method: 'DELETE',
+        await fetch(process.env.REACT_APP_API_URL + `/Report/DeleteSession/?id=${deleteId}`, {
+            method: 'POST',
             headers: {
                 'Ocp-Apim-Subscription-Key': process.env.REACT_APP_SUBSCRIPTION_KEY
             }
         })
             .then((response) => {
-                if (response.status === 204) {
+                if (response.status === 200) {
                     alert("Success");
                     window.location.reload();
                 } else {
                     response.text().then((text) => {
-                        if(text === "Id cannot be found"){
+                        if (text === "Id cannot be found") {
                             alert(`Error - ${text}`);
-                        } else{
+                        } else {
                             alert("Unexpected error");
                         }
-                });
+                    });
                 }
             })
             .catch((error) => {
