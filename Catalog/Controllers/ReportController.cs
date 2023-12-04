@@ -191,14 +191,14 @@ public class ReportController : ControllerBase
     /// </summary>
     /// <param name="id">Section - Primary key to delete</param>
     /// <returns>HTTP 204 when successful</returns>
-    [HttpDelete("Session/{id}")]
+    [HttpDelete("DeleteSession")]
     public IActionResult DeleteSession(string id)
     {
         var session = _context.Sessions.Find(id);
 
         if (session == null)
         {
-            return NotFound(); // Return 404 Not Found if the session with the given id is not found
+            return NotFound("Id cannot be found"); // Return 404 Not Found if the session with the given id is not found
         }
 
         _context.Sessions.Remove(session);

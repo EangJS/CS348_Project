@@ -155,9 +155,9 @@ function Modify() {
      * Performs the HTTP DELETE request to delete a session.
      * @param {ok} e 
      */
-    const submitDelete = (e) => {
+    const submitDelete = async (e) => {
         e.preventDefault();
-        fetch(process.env.REACT_APP_API_URL + `/Report/Session/${deleteId}`, {
+        await fetch(process.env.REACT_APP_API_URL + `/Report/DeleteSession?id=${deleteId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -169,11 +169,18 @@ function Modify() {
                     alert("Success");
                     window.location.reload();
                 } else {
-                    alert(response.statusText);
+                    response.text().then((text) => {
+                        if(text === "Id cannot be found"){
+                            alert(`Error - ${text}`);
+                        } else{
+                            alert("Unexpected error");
+                        }
+                });
                 }
             })
             .catch((error) => {
                 console.error('Error:', error);
+                console.log("error");
                 alert(error);
             });
     };
