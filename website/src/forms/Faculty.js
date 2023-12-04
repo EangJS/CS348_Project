@@ -22,6 +22,11 @@ async function getFaculties() {
     }
 }
 
+/**
+ * Dropdown menu for faculties
+ * @param {*} props 
+ * @returns Dropdown menu for faculties
+ */
 function Faculty(props) {
     const [faculty, setfaculties] = useState([]);
     const { name, labelName, handlechange } = props;

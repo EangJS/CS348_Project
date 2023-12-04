@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Catalog.Models
 {
+    /// <summary>
+    /// Represents the Faculty table from the database.
+    /// </summary>
     [Table("faculty")]
     public class Faculty
     {

@@ -8,6 +8,10 @@ using MySqlConnector;
 
 namespace Catalog.Controllers;
 
+/// <summary>
+/// Main controller for this project.
+/// Handles all the API queries for this project.
+/// </summary>
 [ApiController]
 [Route("[controller]")]
 public class ReportController : ControllerBase
@@ -22,6 +26,12 @@ public class ReportController : ControllerBase
         this._context = catalogDbContext;
     }
 
+    /// <summary>
+    /// Gets the list of locations as Location model from database server
+    /// Used for populating drop downs.
+    /// </summary>
+    /// <param name="limit">Limit number of locations</param>
+    /// <returns>Ok Http Response with JSON of locations</returns>
     [HttpGet("Location")]
     public IActionResult GetLocations(int? limit)
     {
@@ -32,11 +42,18 @@ public class ReportController : ControllerBase
             query = query.Take(limit.Value);
         }
 
-        var sessions = query.ToList();
+        var locations = query.ToList();
 
-        return Ok(sessions);
+        return Ok(locations);
     }
 
+    /// <summary>
+    /// Gets all faculties model from database server.
+    /// Use for populating drop downs. If no email is specified, all faculties are
+    /// retrieved
+    /// </summary>
+    /// <param name="email">Key to query</param>
+    /// <returns>List of faculties</returns>
     [HttpGet("Faculty")]
     public IEnumerable<Faculty> GetFacultyByEmail(string? email)
     {
@@ -50,6 +67,19 @@ public class ReportController : ControllerBase
         return faculties;
     }
 
+
+    /// <summary>
+    /// Main report query to get report data to display session information
+    /// from the database that is joined from multiple tables together.
+    /// If nulls are provided for all parameters, all sessions will be returned.
+    /// </summary>
+    /// <param name="courseSubject">Course subject to query i.e.(CS = Computer Science)</param>
+    /// <param name="courseNumber">5-digit Course code number i.e. 348000</param>
+    /// <param name="type">Type of lesson i.e. PSO </param>
+    /// <param name="location">LocationId of location session is held</param>
+    /// <param name="creditValue">Minimum credits</param>
+    /// <param name="startTime">Start time of the lesson</param>
+    /// <returns>List of Session objects where criterion is fufilled.</returns>
     [HttpGet("Session")]
     public IEnumerable<Session> Sessions(string? courseSubject, string? courseNumber, string? type, string? location, int? creditValue, DateTime? startTime)
     {
@@ -68,7 +98,6 @@ public class ReportController : ControllerBase
         AND CourseCreditMinimumValue >= {4}
         AND STR_TO_DATE(UPPER(CONCAT(sessions.publishedStart, 'm')), '%l:%i%p') >= (STR_TO_DATE({5}, '%l:%i%p'));";
         DateTime defaultTime = DateTime.MinValue.Date;
-
         string formattedTime = (startTime ?? defaultTime).ToString("hh:mmtt");
         List<Session> sessions = _context.Sessions.FromSqlRaw(query, courseSubject,
             courseNumber,
@@ -80,7 +109,12 @@ public class ReportController : ControllerBase
 
     }
 
-
+    /// <summary>
+    /// Gets the Sessions from session table. If null parameters are provided
+    /// all the sessions are returned
+    /// </summary>
+    /// <param name="section">Section key to be queried</param>
+    /// <returns>List of Sessions that fufil the criteria</returns>
     [HttpGet("Section")]
     public IEnumerable<Session> Sessions(string? section)
     {
@@ -91,6 +125,11 @@ public class ReportController : ControllerBase
 
     }
 
+    /// <summary>
+    /// Performs the update to the database server for session table. Section cannot be null.
+    /// </summary>
+    /// <param name="sessionInput">Takes in the JSON object of the Session table with updated values</param>
+    /// <returns>HTTP ok when successful</returns>
     [HttpPost("UpdateSession")]
     public IActionResult UpdateSession([FromBody] Session sessionInput)
     {
@@ -116,7 +155,11 @@ public class ReportController : ControllerBase
     }
 
 
-
+    /// <summary>
+    /// Performs an insertion of a new session to the session table.
+    /// </summary>
+    /// <param name="sessionInput">New session in the form of a JSON object of Session to be inserted</param>
+    /// <returns>HTTP ok when successful</returns>
     [HttpPost("Session")]
     public IActionResult InsertSession([FromBody] Session sessionInput)
     {
@@ -143,6 +186,11 @@ public class ReportController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Performs a deletion of a session given the Section.
+    /// </summary>
+    /// <param name="id">Section - Primary key to delete</param>
+    /// <returns>HTTP 204 when successful</returns>
     [HttpDelete("Session/{id}")]
     public IActionResult DeleteSession(string id)
     {
@@ -157,40 +205,7 @@ public class ReportController : ControllerBase
         _context.SaveChanges();
 
         return NoContent(); // Return 204 No Content if the session is successfully deleted
-    }
-
-    [HttpDelete("Course/{id}")]
-    public IActionResult DeleteCourse(string id)
-    {
-        var course = _context.Courses.Find(id);
-
-        if (course == null)
-        {
-            return NotFound(); // Return 404 Not Found if the session with the given id is not found
-        }
-
-        _context.Courses.Remove(course);
-        _context.SaveChanges();
-
-        return NoContent(); // Return 204 No Content if the session is successfully deleted
-    }
-  
-    [HttpDelete("Location/{id}")]
-    public IActionResult DeleteLocation(string id)
-    {
-        var location = _context.Locations.Find(id);
-
-        if (location == null)
-        {
-            return NotFound(); // Return 404 Not Found if the session with the given id is not found
-        }
-
-        _context.Locations.Remove(location);
-        _context.SaveChanges();
-
-        return NoContent(); // Return 204 No Content if the session is successfully deleted
-    }
-    
+    }    
 
 }
 

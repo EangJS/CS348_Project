@@ -4,7 +4,11 @@ import '../material-css/theme.css';
 import Filter from './Filter';
 import { useState } from "react";
 import Spinner from './Spinner';
-function App() {
+/**
+ * Component that holds the Filter and Sessions where user can view and filter for sessions.
+ * @returns Home component which is the entry point of the application for user to view sessions
+ */
+function Home() {
   const [formData, setFormData] = useState({
   });
 
@@ -32,4 +36,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;

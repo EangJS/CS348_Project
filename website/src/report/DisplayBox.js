@@ -1,3 +1,8 @@
+/**
+ * Displays a single session
+ * @param {*} props A single session data
+ * @returns 
+ */
 function DisplayBox(props) {
     const { session } = props;
 

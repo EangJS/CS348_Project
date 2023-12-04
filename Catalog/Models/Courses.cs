@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Catalog.Models
 {
+	/// <summary>
+	/// Model that represents the courses from the database's courses table.
+	/// </summary>
 	public class Courses
 	{
 		[Column("CourseSubjectAbbreviation")]
@@ -10,15 +13,6 @@ namespace Catalog.Models
 		[Key]
 		[Column("CourseNumber")]
 		public string Number { get; set; }
-		//public string ShortTitle { get; set; }
-		//public string LongTitle{get;set;}
-		//public string Description{get;set;}
-		//public string CreditBasis{get;set;}
-		//public string CreditMinimumValue{get;set;}
-		//public string CreditMaximumValue{get;set;}
-		//public string Level{get;set;}
-        //public string Attribute{get;set;}
-
 
         public Courses()
 		{

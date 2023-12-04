@@ -1,6 +1,10 @@
 import DisplayBox from './DisplayBox';
 
-
+/**
+ * Component for displaying the sessions report filtered by the user
+ * @param {formData} The JSON array of sessions from database that has been filtered by the user
+ * @returns 
+ */
 function Session({ formData }) {
     if (!formData[0]) {
         return (

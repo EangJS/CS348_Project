@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Catalog.Models
 {
+    /// <summary>
+    /// Represents the Locations table from the database.
+    /// </summary>
     [Table("locations")]
     public class Location
     {

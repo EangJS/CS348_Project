@@ -1,3 +1,8 @@
+/**
+ * Component for radio selection in the Report menu for session type
+ * @param {*} props 
+ * @returns Radio Menu for session types
+ */
 function Types(props) {
     const types = ["PSO", "Lecture", "Laboratory", "Recitation"];
     const { name, labelName, handlechange } = props;
@@ -37,4 +42,3 @@ function Types(props) {
 }
 
 export default Types;
-

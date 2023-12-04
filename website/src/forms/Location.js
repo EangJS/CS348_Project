@@ -22,6 +22,11 @@ async function getLocations() {
     }
 }
 
+/**
+ * Location dropdown component for user to select location in the editor
+ * @param {*} props 
+ * @returns Location Component
+ */
 function Location(props) {
     const [locations, setLocations] = useState([]);
     const { name, labelName, handlechange, defaultValue } = props;

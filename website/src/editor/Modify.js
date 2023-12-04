@@ -3,6 +3,12 @@ import '../material-css/theme.css';
 import React, { useState, useEffect } from 'react';
 import Field from '../forms/Field';
 import Location from '../forms/Location';
+
+/**
+ * Performs API request to backend server to retrieve Sessions given the sectionId (Section)
+ * @param {Array} sectionId 
+ * @returns JSON array containing Session data.
+ */
 async function getSections(sectionId) {
     try {
         var url = new URL(process.env.REACT_APP_API_URL + '/Report/Section');
@@ -28,6 +34,11 @@ async function getSections(sectionId) {
     }
 }
 
+/**
+ * Parses the database format time string to HH:mm
+ * @param {string} timeString Database format time string
+ * @returns Time string in the form of HH:mm
+ */
 function parseTimeString(timeString) {
     if (timeString === null) {
         return "00:00"
@@ -44,7 +55,11 @@ function parseTimeString(timeString) {
 }
 
 
-
+/**
+ * Component that performs the updating/deletion of existing sessions in the database.
+ * Handles the changes made to the fields by the user and form submissions for deletion and updating.
+ * @returns default component
+ */
 function Modify() {
     const [deleteId, setDeleteId] = useState(null);
     const [courseName, setCourseName] = useState('');
@@ -56,6 +71,10 @@ function Modify() {
     const [formData, setFormData] = useState({
     });
 
+    /**
+     * Handles the updating of formData when user makes inputs to Field
+     * @param {e} e 
+     */
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -88,6 +107,12 @@ function Modify() {
             });
     };
 
+    /**
+     * Calls the API with getSections() and subsequently,
+     * Handles the updating of FormData state form backend server whenever a new session is selected
+     * from the drop down.
+     * @param {null} e 
+     */
     const handleSelectChange = async (e) => {
         const target = e.target;
         setDeleteId(target.value);
@@ -126,7 +151,10 @@ function Modify() {
         fetchSections();
     }, []);
 
-
+    /**
+     * Performs the HTTP DELETE request to delete a session.
+     * @param {ok} e 
+     */
     const submitDelete = (e) => {
         e.preventDefault();
         fetch(process.env.REACT_APP_API_URL + `/Report/Session/${deleteId}`, {

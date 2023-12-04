@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Catalog.Models
 {
+    /// <summary>
+    /// Represents the Sessions table from the database.
+    /// </summary>
     [Table("sessions")]
     public class Session
     {
@@ -33,21 +36,19 @@ namespace Catalog.Models
             Email = email;
         }
 
+        /// <summary>
+        /// Converts the HH:mm time format to the database format i.e.09:00a 
+        /// </summary>
+        /// <param name="inputTime">Time string in format HH:mm</param>
+        /// <returns>Database format time string</returns>
         public static string ConvertTimeFormat(string inputTime)
         {
-            // Parse the input time string
             string[] timeComponents = inputTime.Split(':');
             int hours = int.Parse(timeComponents[0]);
             int minutes = int.Parse(timeComponents[1]);
-
-            // Create a DateTime object with an arbitrary date and the parsed time
             DateTime dateTime = new DateTime(2000, 1, 1, hours, minutes, 0);
-
-            // Format the time in the desired output format
             string formattedTime = dateTime.ToString("hh:mmtt", System.Globalization.CultureInfo.InvariantCulture);
-
-
-            return formattedTime.Remove(formattedTime.Length - 1).ToLower(); // Convert to lowercase for 'p' or 'a' in the result
+            return formattedTime.Remove(formattedTime.Length - 1).ToLower();
         }
     }
 }

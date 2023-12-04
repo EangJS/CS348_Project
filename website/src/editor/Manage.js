@@ -5,6 +5,11 @@ import Field from '../forms/Field';
 import Location from '../forms/Location';
 import Faculty from '../forms/Faculty';
 import Modify from './Modify';
+
+/**
+ * Holds the Addition of new sessions via the backend and the Modify component.
+ * @returns Manage Component that is used for Adding/Modifying data Page
+ */
 function Manage() {
   const [formData, setFormData] = useState({
     courseName: '',

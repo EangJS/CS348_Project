@@ -43,7 +43,11 @@ async function getSessions(formState) {
     }
 }
 
-
+/**
+ * Component for managing the filtering of sessions for the report menu.
+ * @param {*} param0 
+ * @returns The form component for user to select criteria to filter.
+ */
 function Filter({ onFormSubmit, setLoader }) {
     const [formState, setFormState] = useState({
         courseCode: '',
