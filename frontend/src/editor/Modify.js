@@ -157,11 +157,10 @@ function Modify() {
      */
     const submitDelete = async (e) => {
         e.preventDefault();
-        await fetch(process.env.REACT_APP_API_URL + `/Report/DeleteSession?id=${deleteId}`, {
+        await fetch(process.env.REACT_APP_API_URL + `/Report/DeleteSession`, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json',
-                'Ocp-Apim-Subscription-Key': process.env.REACT_APP_SUBSCRIPTION_KEY,
+                'Ocp-Apim-Subscription-Key': process.env.REACT_APP_SUBSCRIPTION_KEY
             }
         })
             .then((response) => {

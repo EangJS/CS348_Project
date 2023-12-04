@@ -10,6 +10,7 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+            policy.WithOrigins("https://catalog348.vercel.app/").AllowAnyMethod().AllowAnyHeader();
         });
 });
 
