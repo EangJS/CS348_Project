@@ -54,12 +54,6 @@ function Modify() {
     const [endTime, setEndTime] = useState('');
 
     const [formData, setFormData] = useState({
-        courseName: '',
-        section: '',
-        type: '',
-        publishedStart: '',
-        publishedEnd: '',
-        location: ''
     });
 
     const handleChange = (e) => {
@@ -180,8 +174,8 @@ function Modify() {
                     <Field defaultValue={courseName} handlechange={handleChange} name={"courseName"} labelName={"Course Name"}></Field>
                     <Field defaultValue={type} name={"type"} labelName={"Type"} handlechange={handleChange}></Field>
                     <Location defaultValue={location} name={"location"} labelName={"Location"} handlechange={handleChange} />
-                    <Field defaultValue={startTime} inputType={"time"} name={"startTime"} labelName={"Start Time"} handlechange={handleChange} />
-                    <Field defaultValue={endTime} inputType={"time"} name={"endTime"} labelName={"End Time"} handlechange={handleChange} />
+                    <Field defaultValue={startTime} inputType={"time"} name={"publishedStart"} labelName={"Start Time"} handlechange={handleChange} />
+                    <Field defaultValue={endTime} inputType={"time"} name={"publishedEnd"} labelName={"End Time"} handlechange={handleChange} />
                     <button className="bg-[var(--md-sys-color-tertiary-container-dark)] hover:bg-[var(--md-sys-color-surface-dark)] text-[var(--md-sys-color-on-primary-container-dark)] font-bold rounded-full">
                         Update
                     </button>
