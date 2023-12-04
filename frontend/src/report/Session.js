@@ -6,13 +6,6 @@ import DisplayBox from './DisplayBox';
  * @returns 
  */
 function Session({ formData }) {
-    if (!formData[0]) {
-        return (
-            <div className='text-3xl font-bold mt-2 text-[var(--md-sys-color-on-primary-container-dark)]'>
-                Internal Server Error
-            </div>
-        )
-    }
     if (formData[0]) {
         return (
             <div className='flex flex-col gap-3 w-full'>
@@ -31,6 +24,12 @@ function Session({ formData }) {
                 No matches found!
             </div>
         );
+    } else {
+        return (
+            <div className='text-3xl font-bold mt-2 text-[var(--md-sys-color-on-primary-container-dark)]'>
+                Failed to fetch data!
+            </div>
+        )
     }
 }
 
