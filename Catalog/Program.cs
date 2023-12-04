@@ -9,8 +9,14 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: myCors,
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
-            policy.WithOrigins("https://catalog348.vercel.app/").AllowAnyMethod().AllowAnyHeader();
+            policy.WithOrigins("http://localhost:3000").AllowAnyMethod()
+                 .AllowAnyHeader()
+                 .AllowCredentials()
+                 .SetPreflightMaxAge(TimeSpan.FromSeconds(2520));
+            policy.WithOrigins("https://catalog348.vercel.app").AllowAnyMethod()
+                 .AllowAnyHeader()
+                 .AllowCredentials()
+                 .SetPreflightMaxAge(TimeSpan.FromSeconds(2520));
         });
 });
 
