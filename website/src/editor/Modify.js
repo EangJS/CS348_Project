@@ -24,12 +24,16 @@ async function getSections(sectionId) {
         return data;
     } catch (error) {
         console.error('Error:', error);
+        return "Error";
     }
 }
 
 function parseTimeString(timeString) {
     if (timeString === null) {
         return "00:00"
+    }
+    if (timeString === "noon") {
+        return "12:00"
     }
     const [hours, minutes] = timeString.match(/\d+/g).map(Number);
     const isPM = /p/i.test(timeString);
@@ -39,13 +43,56 @@ function parseTimeString(timeString) {
     return `${formattedHours}:${formattedMinutes}`;
 }
 
-function Delete() {
+
+
+function Modify() {
     const [deleteId, setDeleteId] = useState(null);
     const [courseName, setCourseName] = useState('');
     const [type, setType] = useState('');
     const [location, setLocation] = useState('');
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
+
+    const [formData, setFormData] = useState({
+        courseName: '',
+        section: '',
+        type: '',
+        publishedStart: '',
+        publishedEnd: '',
+        location: ''
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    const submit = (e) => {
+        e.preventDefault();
+        fetch(process.env.REACT_APP_API_URL + '/Report/UpdateSession', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Ocp-Apim-Subscription-Key': process.env.REACT_APP_SUBSCRIPTION_KEY,
+            },
+            body: JSON.stringify(formData),
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    alert("Success");
+                    window.location.reload();
+                } else {
+                    alert(response.statusText);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert(error);
+            });
+    };
 
     const handleSelectChange = async (e) => {
         const target = e.target;
@@ -58,12 +105,21 @@ function Delete() {
         const defaultEnd = parseTimeString(data[0].publishedEnd ?? "00:00a")
         setStartTime(defaultStart);
         setEndTime(defaultEnd);
+        const updatedFormData = {
+            Section: target.value,
+            CourseName: data[0].courseName,
+            type: data[0].type,
+            location: data[0].location,
+            PublishedStart: parseTimeString(data[0].publishedStart),
+            PublishedEnd: parseTimeString(data[0].publishedEnd),
+        };
+
+        // Update the state once with all the new values
+        setFormData(() => ({
+            ...updatedFormData,
+        }));
     };
 
-    const handleChange = (e) => {
-        const target = e.target;
-        setDeleteId(target.value);
-    };
 
     const [sections, setSections] = useState([]);
 
@@ -77,7 +133,7 @@ function Delete() {
     }, []);
 
 
-    const submit = (e) => {
+    const submitDelete = (e) => {
         e.preventDefault();
         fetch(process.env.REACT_APP_API_URL + `/Report/Session/${deleteId}`, {
             method: 'DELETE',
@@ -100,10 +156,12 @@ function Delete() {
             });
     };
 
-
+    if (sections === "Error") {
+        return (<></>);
+    }
     return (
         <div className="flex items-center justify-center w-full p-5 m-5">
-            <div className="max-w-full p-5 m-5 rounded-xl bg-[var(--md-sys-color-on-primary-dark)]">
+            <div className="flex flex-col gap-5 max-w-full p-5 m-5 rounded-xl bg-[var(--md-sys-color-on-primary-dark)]">
                 <form className="flex flex-col" onSubmit={submit}>
                     <label className="block uppercase tracking-wide text-[var(--md-sys-color-on-primary-container-dark)] text-xs font-bold mb-2">
                         Session Id
@@ -125,6 +183,11 @@ function Delete() {
                     <Field defaultValue={startTime} inputType={"time"} name={"startTime"} labelName={"Start Time"} handlechange={handleChange} />
                     <Field defaultValue={endTime} inputType={"time"} name={"endTime"} labelName={"End Time"} handlechange={handleChange} />
                     <button className="bg-[var(--md-sys-color-tertiary-container-dark)] hover:bg-[var(--md-sys-color-surface-dark)] text-[var(--md-sys-color-on-primary-container-dark)] font-bold rounded-full">
+                        Update
+                    </button>
+                </form>
+                <form className="flex flex-col" onSubmit={submitDelete}>
+                    <button className="bg-[var(--md-sys-color-tertiary-container-dark)] hover:bg-[var(--md-sys-color-surface-dark)] text-[var(--md-sys-color-on-primary-container-dark)] font-bold rounded-full">
                         Delete
                     </button>
                 </form>
@@ -133,4 +196,4 @@ function Delete() {
     );
 }
 
-export default Delete;
+export default Modify;

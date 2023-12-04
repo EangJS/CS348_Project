@@ -51,7 +51,7 @@ public class ReportController : ControllerBase
     }
 
     [HttpGet("Session")]
-    public IEnumerable<Session> Sessions(string? courseSubject, string? courseNumber, string? type, string? location, int? creditValue,DateTime? startTime)
+    public IEnumerable<Session> Sessions(string? courseSubject, string? courseNumber, string? type, string? location, int? creditValue, DateTime? startTime)
     {
         string query = @"
         SELECT *
@@ -68,7 +68,7 @@ public class ReportController : ControllerBase
         AND CourseCreditMinimumValue >= {4}
         AND STR_TO_DATE(UPPER(CONCAT(sessions.publishedStart, 'm')), '%l:%i%p') >= (STR_TO_DATE({5}, '%l:%i%p'));";
         DateTime defaultTime = DateTime.MinValue.Date;
-        
+
         string formattedTime = (startTime ?? defaultTime).ToString("hh:mmtt");
         List<Session> sessions = _context.Sessions.FromSqlRaw(query, courseSubject,
             courseNumber,
@@ -80,6 +80,7 @@ public class ReportController : ControllerBase
 
     }
 
+
     [HttpGet("Section")]
     public IEnumerable<Session> Sessions(string? section)
     {
@@ -90,7 +91,31 @@ public class ReportController : ControllerBase
 
     }
 
-    
+    [HttpPost("UpdateSession")]
+    public IActionResult UpdateSession([FromBody] Session sessionInput)
+    {
+        string convertedPublishedStart = Session.ConvertTimeFormat(sessionInput.PublishedStart ?? "00:00");
+        string convertedPublishedEnd = Session.ConvertTimeFormat(sessionInput.PublishedEnd ?? "00:00");
+        try
+        {
+            // Call the stored procedure
+            _context.Database.ExecuteSqlRaw("CALL UpdateSession({0}, {1}, {2}, {3}, {4}, {5})",
+                sessionInput.CourseName,
+                sessionInput.Section,
+                sessionInput.Type ?? string.Empty,
+                convertedPublishedStart,
+                convertedPublishedEnd,
+                sessionInput.Location ?? string.Empty);
+
+            return Ok("Session inserted successfully");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Error: {ex.Message}");
+        }
+    }
+
+
 
     [HttpPost("Session")]
     public IActionResult InsertSession([FromBody] Session sessionInput)

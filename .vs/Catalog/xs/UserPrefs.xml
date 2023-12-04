@@ -1,15 +1,11 @@
 ﻿<Properties StartupConfiguration="{2D0825BF-69E1-4DCE-A1D9-13138DABA6B5}|https">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.Catalog PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.Workbench ActiveDocument="Catalog/Controllers/ReportController.cs">
     <Files>
-      <File FileName="Catalog/Controllers/ReportController.cs" Line="93" Column="65" />
+      <File FileName="Catalog/Controllers/ReportController.cs" Line="87" Column="68" />
       <File FileName="Catalog/appsettings.json" />
-      <File FileName="Catalog/Models/Session.cs" />
-      <File FileName="Catalog/Program.cs" />
+      <File FileName="Catalog/Models/Session.cs" Line="1" Column="1" />
+      <File FileName="Catalog/Program.cs" Line="33" Column="1" />
       <File FileName="Catalog/CatalogDbContext.cs" />
     </Files>
     <Pads>
@@ -17,15 +13,21 @@
         <State name="__root__">
           <Node name="Catalog">
             <Node name="Catalog" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="ReportController.cs" selected="True" />
-              </Node>
+              <Node name="Controllers" expanded="True" />
+              <Node name="Models" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Catalog PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>

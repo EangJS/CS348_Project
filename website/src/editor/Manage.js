@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Field from '../forms/Field';
 import Location from '../forms/Location';
 import Faculty from '../forms/Faculty';
-import Delete from './Delete';
+import Modify from './Modify';
 function Manage() {
   const [formData, setFormData] = useState({
     courseName: '',
@@ -70,7 +70,7 @@ function Manage() {
           </form>
         </div>
       </div>
-      <Delete></Delete>
+      <Modify></Modify>
     </div>
 
   );

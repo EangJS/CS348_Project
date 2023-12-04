@@ -18,6 +18,7 @@ async function getFaculties() {
         return data;
     } catch (error) {
         console.error('Error:', error);
+        return "Error";
     }
 }
 
@@ -33,6 +34,10 @@ function Faculty(props) {
 
         fetchFaculties();
     }, []);
+
+    if (faculty === "Error") {
+        return (<></>)
+    }
 
     return (
         <div className="w-full">

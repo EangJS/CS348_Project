@@ -39,6 +39,7 @@ async function getSessions(formState) {
         return data;
     } catch (error) {
         console.error('Error:', error);
+        return (<></>);
     }
 }
 

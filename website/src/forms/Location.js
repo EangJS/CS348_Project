@@ -18,12 +18,19 @@ async function getLocations() {
         return data;
     } catch (error) {
         console.error('Error:', error);
+        return (<></>);
     }
 }
 
 function Location(props) {
     const [locations, setLocations] = useState([]);
-    const { name, labelName, handlechange } = props;
+    const { name, labelName, handlechange, defaultValue } = props;
+    const [selectedLocation, setSelectedLocation] = useState(props["defaultValue"] || ""); // Use defaultValue if provided
+
+    useEffect(() => {
+        // Update selected location when defaultValue prop changes
+        setSelectedLocation(defaultValue || "");
+    }, [defaultValue]);
 
     useEffect(() => {
         const fetchLocations = async () => {
@@ -33,8 +40,15 @@ function Location(props) {
 
         fetchLocations();
     }, []);
+    const handleSelectChange = (e) => {
+        setSelectedLocation(e.target.value);
+        handlechange(e); // Pass the event to the parent component if needed
+    };
 
 
+    if (!locations[0]) {
+        return (<></>);
+    }
     return (
         <div className="w-full">
             <label className="block uppercase tracking-wide text-[var(--md-sys-color-on-primary-container-dark)] text-xs font-bold mb-2">
@@ -43,8 +57,8 @@ function Location(props) {
             <select
                 name={name}
                 className="appearance-none block w-full text-[var(--md-sys-color-on-secondary-container)] bg-[var(--md-sys-color-secondary-container-dark)] border rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
-                onChange={handlechange}
-                value={props["defaultValue"]}            >
+                onChange={handleSelectChange}
+                value={selectedLocation}            >
                 <option value="">Select a location</option>
                 {locations.map(location => (
                     <option key={location.locationId} value={location.locationId}>
